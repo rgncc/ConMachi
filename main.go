@@ -69,7 +69,6 @@ func ParseArgs() (*CmdOptions, error) {
 	//var MinSevStr string
 
 	flag.StringVar(&opts.LogFile, "l", "", "File to log to")
-	flag.IntVar(&opts.IPSniffTime, "sniff", 0, "Sniff the network for IP addresses for a given number of seconds")
 	//flag.StringVar(&MinSevStr, "s", "info", "Minimum severity to include in output")
 	//flag.BoolVar(&opts.KubernetesScan, "k", false, "Check for Kubernetes related issues")
 	flag.Parse()
@@ -241,20 +240,11 @@ func main() {
 
     results := make([]*ScanResult, 0)
 	
-	if (curState.CmdOpts.IPSniffTime > 0) {
-		sniffResults, err := SniffIPs(curState, curState.CmdOpts.IPSniffTime)
-		if err != nil {
-			InfoLog.Printf("error sniffing network: %s\n", err)
-		} else {
-			results = append(results, sniffResults...)
-		}
+	scanResults, err := NormalScan(curState)
+	if err != nil {
+		InfoLog.Printf("error performing scan: %s\n", err)
 	} else {
-		scanResults, err := NormalScan(curState)
-		if err != nil {
-			InfoLog.Printf("error performing scan: %s\n", err)
-		} else {
-			results = append(results, scanResults...)
-		}
+		results = append(results, scanResults...)
 	}
 
     // Print results

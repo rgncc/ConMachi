@@ -5,25 +5,18 @@ Conmachi is a tool written in Golang intended to be used to collect information 
 
 ## Building
 
-Dependencies:
-
-~~~
-sudo apt-get install libpcap-dev
-~~~
-
 Conmachi is intended to be built on any LTS version of Ubuntu. In development, it has been built with Go version 1.9 and above but should compile with most versions.
 
 You can statically build the tool with the following commands:
 
 ~~~
-go get github.com/nccgroup/ConMachi
-go get ./...
-cd $GOPATH/bin
+git clone git@github.com:nccgroup/ConMachi.git
+cd ConMachi
 
 # Dynamically compile
-CGO_LDFLAGS="/usr/lib/x86_64-linux-gnu/libpcap.a" go build conmachi
-# OR statically compile, may cause issues with network scanning
-CGO_LDFLAGS="/usr/lib/x86_64-linux-gnu/libpcap.a" go build -ldflags '-w -extldflags "-static"' conmachi
+go build -o conmachi .
+# OR statically compile
+go build -ldflags '-w -extldflags "-static"' -o conmachi .
 ~~~
 
 ## What it checks for
@@ -40,7 +33,6 @@ It also collects information that may be useful while exploring a container incl
 * Kernel version
 * All capability sets with decoded values
 * Detect container solution
-* Sniff network interface for other hosts
 
 Currently in progress:
 
@@ -53,8 +45,6 @@ Currently in progress:
 Usage of ./conmachi:
   -l string
         File to log to
-  -sniff int
-        Sniff the network for IP addresses for a given number of seconds
 ~~~
 
 ## Example
