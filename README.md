@@ -1,5 +1,5 @@
 # Conmachi Container Scanner
-## Is It Wrong To Pick Up Capabilities In A Container?
+## What is it?
 
 Conmachi is a tool written in Golang intended to be used to collect information about a container environment and list potential security issues. It can be statically compiled so that it can be dropped into a container environment and run without any dependencies.
 
